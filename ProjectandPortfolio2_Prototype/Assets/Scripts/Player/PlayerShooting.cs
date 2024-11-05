@@ -38,6 +38,11 @@ public class PlayerShooting : MonoBehaviour
         if (Physics.Raycast(playerCamera.transform.position, playerCamera.transform.forward, out hit, shootDistance, ~ignoreMask))
         {
             Debug.Log(hit.collider.name);
+            IDamage damage = hit.collider.GetComponent<IDamage>();
+            if (damage != null)
+            {
+                damage.DealDamage(shootDamage);
+            }
         }
         shootCooldown = shootSpeed;
     }
