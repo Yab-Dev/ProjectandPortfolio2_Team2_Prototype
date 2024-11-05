@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8418540651809753157}
   - component: {fileID: 8534309059262172192}
+  - component: {fileID: 8159371000799119960}
   - component: {fileID: 4138138952609952891}
   - component: {fileID: 6072305957264074236}
   - component: {fileID: 3167503122761331815}
@@ -58,6 +59,25 @@ MonoBehaviour:
   invertCamera: 0
   cameraClampBounds: {x: -90, y: 90}
   controller: {fileID: 2650879318323595409}
+  playerCamera: {fileID: 6323742170648818838}
+--- !u!114 &8159371000799119960
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2646022271196665677}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 72fc18991012e194ebd95bc57689d89a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ignoreMask:
+    serializedVersion: 2
+    m_Bits: 0
+  shootDamage: 3
+  shootSpeed: 0.5
+  shootDistance: 50
   playerCamera: {fileID: 6323742170648818838}
 --- !u!33 &4138138952609952891
 MeshFilter:
