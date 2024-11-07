@@ -14,15 +14,20 @@ public class EnemyAI : MonoBehaviour, IDamage // Enemy AI with health
     [SerializeField] GameObject bullet; // Bullet prefab
     [SerializeField] float shootRate; // Time between shots
 
-    Color colorOrig; // Store original color
-    bool isShooting; // Shooting state
-    bool playerInRange; // Player in range check
-    Vector3 playerDir; // Direction to player
+    private Color colorOrig; // Store original color
+    private bool isShooting; // Shooting state
+    private bool playerInRange; // Player range state
+    private Vector3 playerDir; // Direction to player
+    private MaterialPropertyBlock propBlock; // For individual material properties
 
     void Start() // Initial setup
     {
         colorOrig = model.material.color; // Cache original color
-        // Register enemy in GameManager
+        propBlock = new MaterialPropertyBlock(); // Initialize MaterialPropertyBlock
+        model.GetPropertyBlock(propBlock);
+        propBlock.SetColor("_Color", colorOrig); // Set the initial color in propBlock
+        model.SetPropertyBlock(propBlock);
+        // Register this enemy in GameManager
     }
 
     void Update() // Frame-by-frame updates
@@ -78,14 +83,23 @@ public class EnemyAI : MonoBehaviour, IDamage // Enemy AI with health
         {
             // Deregister in GameManager
             Destroy(gameObject); // Destroy this enemy
+            Debug.Log("Enemy destroyed"); // Log destruction
         }
     }
 
     private IEnumerator FlashRed() // Flash red on damage
     {
         model.material.color = Color.red; // Change color to red
+
+        model.GetPropertyBlock(propBlock);
+        propBlock.SetColor("_Color", Color.red); // Change to red
+        model.SetPropertyBlock(propBlock);
+
         yield return new WaitForSeconds(0.1f); // Wait briefly
-        model.material.color = colorOrig; // Reset to original color
+
+        propBlock.SetColor("_Color", colorOrig); // Reset to original color
+        model.SetPropertyBlock(propBlock);
+        Debug.Log("Reset color"); // Log after resetting color
     }
 
     private IEnumerator Shoot() // Manage shooting rate
