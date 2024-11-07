@@ -91,14 +91,15 @@ public class EnemyAI : MonoBehaviour, IDamage // Enemy AI with health
     {
         model.material.color = Color.red; // Change color to red
 
-        model.GetPropertyBlock(propBlock);
-        propBlock.SetColor("_Color", Color.red); // Change to red
-        model.SetPropertyBlock(propBlock);
+        //model.GetPropertyBlock(propBlock);
+        //propBlock.SetColor("_Color", Color.red); // Change to red
+        //model.SetPropertyBlock(propBlock);
 
         yield return new WaitForSeconds(0.1f); // Wait briefly
 
-        propBlock.SetColor("_Color", colorOrig); // Reset to original color
-        model.SetPropertyBlock(propBlock);
+        model.material.color = colorOrig;
+        //propBlock.SetColor("_Color", colorOrig); // Reset to original color
+        //model.SetPropertyBlock(propBlock);
         Debug.Log("Reset color"); // Log after resetting color
     }
 
