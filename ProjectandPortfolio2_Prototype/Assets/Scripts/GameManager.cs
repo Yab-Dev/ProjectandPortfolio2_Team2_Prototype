@@ -5,6 +5,13 @@ public class GameManager : MonoBehaviour
     public static GameManager instance; // Singleton instance
 
     [SerializeField] private GameObject player; // Player reference
+
+    [SerializeField] GameObject menuActive;
+    [SerializeField] GameObject menuPause;
+    [SerializeField] GameObject menuWin;
+    public bool isPaused;
+    float timeScaleOriginal;
+
     public int enemyCount; // Active enemy count
 
     // Original time scale
@@ -15,11 +22,13 @@ public class GameManager : MonoBehaviour
         {
             instance = this; // Set instance
             DontDestroyOnLoad(gameObject); // Persist across scenes
+            timeScaleOriginal = Time.timeScale;
         }
         else
         {
             Destroy(gameObject); // Destroy duplicates
         }
+
     }
 
     void Start() // Ensure player reference
@@ -52,14 +61,58 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    // Update game goal
 
-    // Win screen
+    // Update is called once per frame
+    void Update()
+    {
+        if (Input.GetButtonDown("Cancel"))
+        {
+            if (menuActive == null)
+            {
+                statePause();
+                menuActive = menuPause;
+                menuActive.SetActive(true);
+            }
+            else if (menuActive == menuPause)
+            {
+                stateUnpause();
+            }
+        }
+    }
+
+    // Update game goal
+    public void updateGameGoal(int amount)
+    {
+        enemyCount += amount;
+
+        // You WIN!!!
+        if (enemyCount <= 0)
+        {
+            statePause();
+            menuActive = menuWin;
+            menuActive.SetActive(true);
+        }
+    }
 
     // Lose screen
 
     // Pause the game
+    public void statePause()
+    {
+        isPaused = !isPaused;
+        Time.timeScale = 0;
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.Confined;
+    }
 
     // Unpause the game
-
+    public void stateUnpause()
+    {
+        isPaused = !isPaused;
+        Time.timeScale = timeScaleOriginal;
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
+        menuActive.SetActive(false);
+        menuActive = null;
+    }
 }
