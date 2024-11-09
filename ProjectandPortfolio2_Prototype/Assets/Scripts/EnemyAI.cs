@@ -1,7 +1,6 @@
 using System.Collections; // For IEnumerator use
 using UnityEngine; // Unity engine
 using UnityEngine.AI; // NavMesh for navigation
-using Unity.Mathematics; // Math functions for rotation
 
 public class EnemyAI : MonoBehaviour, IDamage // Enemy AI with health
 {
@@ -27,6 +26,7 @@ public class EnemyAI : MonoBehaviour, IDamage // Enemy AI with health
         model.GetPropertyBlock(propBlock);
         propBlock.SetColor("_Color", colorOrig); // Set the initial color in propBlock
         model.SetPropertyBlock(propBlock);
+        GameManager.instance.updateGameGoal(1);
         // Register this enemy in GameManager
     }
 
@@ -84,6 +84,8 @@ public class EnemyAI : MonoBehaviour, IDamage // Enemy AI with health
             // Deregister in GameManager
             Destroy(gameObject); // Destroy this enemy
             Debug.Log("Enemy destroyed"); // Log destruction
+            GameManager.instance.updateGameGoal(-1);
+
         }
     }
 

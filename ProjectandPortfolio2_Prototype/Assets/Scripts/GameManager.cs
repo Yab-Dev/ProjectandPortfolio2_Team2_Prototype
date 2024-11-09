@@ -12,7 +12,7 @@ public class GameManager : MonoBehaviour
     public bool isPaused;
     float timeScaleOriginal;
 
-    public int enemyCount; // Active enemy count
+    int enemyCount; // Active enemy count
 
     // Original time scale
 
