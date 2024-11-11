@@ -82,9 +82,9 @@ public class EnemyAI : MonoBehaviour, IDamage // Enemy AI with health
         if (HP <= 0) // If HP is zero or below
         {
             // Deregister in GameManager
+            GameManager.instance.updateGameGoal(-1);
             Destroy(gameObject); // Destroy this enemy
             Debug.Log("Enemy destroyed"); // Log destruction
-            GameManager.instance.updateGameGoal(-1);
 
         }
     }

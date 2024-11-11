@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class PlayerController : MonoBehaviour
+public class PlayerController : MonoBehaviour, IDamage
 {
     [Header("Player Movement Settings")]
     [SerializeField] private float moveSpeed;
@@ -20,16 +20,22 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private CharacterController controller;
     [SerializeField] private Transform playerCamera;
 
+    [Header("Player Stats")]
+    [SerializeField] int HP;
+
+
     // Private Variables
     private float cameraRotX;
     private Vector3 playerVelocity;
     private int jumpsRemaining;
+    private int HPOriginal;
 
     void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
 
+        HPOriginal = HP;
         jumpsRemaining = jumpCount;
     }
 
@@ -92,5 +98,22 @@ public class PlayerController : MonoBehaviour
             playerVelocity.y = jumpHeight;
             jumpsRemaining--;
         }
+    }
+
+    public void DealDamage(int amount)
+    {
+        HP -= amount;
+        updatePlayerUI();
+
+        // IF DEAD
+        if (HP <= 0)
+        {
+            GameManager.instance.playerLose();
+        }
+    }
+
+    public void updatePlayerUI()
+    {
+
     }
 }

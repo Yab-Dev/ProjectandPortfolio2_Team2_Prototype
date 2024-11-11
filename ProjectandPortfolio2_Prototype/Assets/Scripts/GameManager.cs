@@ -1,4 +1,7 @@
-using UnityEngine; // Unity engine library
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
 
 public class GameManager : MonoBehaviour
 {
@@ -9,6 +12,9 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject menuActive;
     [SerializeField] GameObject menuPause;
     [SerializeField] GameObject menuWin;
+    [SerializeField] GameObject menuLose;
+
+
     public bool isPaused;
     float timeScaleOriginal;
 
@@ -95,6 +101,14 @@ public class GameManager : MonoBehaviour
     }
 
     // Lose screen
+    public void playerLose()
+    {
+        statePause();
+        menuActive = menuLose;
+        menuActive.SetActive(true);
+    }
+
+
 
     // Pause the game
     public void statePause()
@@ -115,4 +129,7 @@ public class GameManager : MonoBehaviour
         menuActive.SetActive(false);
         menuActive = null;
     }
+
+    
+
 }
